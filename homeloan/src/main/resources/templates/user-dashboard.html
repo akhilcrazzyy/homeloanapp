@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .banner {
+        background-color: #00ACC1;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+    }
+    .loan-types {
+        display: flex;
+        justify-content: center;
+        margin: 2rem;
+    }
+    .loan-type {
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 1rem;
+        margin: 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .loan-type:hover {
+        background-color: #E0E0E0;
+        color: #333;
+    }
+    .loan-details {
+        display: none;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 1rem;
+        background-color: #f0f0f0;
+        color: #333;
+    }
+</style>
+<title>Home Loans</title>
+</head>
+<body>
+    <div class="banner">
+        <h1>Home Loans</h1>
+        <a class="logout-link" href="/login">Logout</a>
+    </div>
+    <div class="loan-types">
+        <div class="loan-type" onclick="showDetails('home-loan')">
+            <h2>Home Loan</h2>
+            <button>View</button>
+        </div>
+        <div class="loan-type" onclick="showDetails('renovation-loan')">
+            <h2>House Renovation Loan</h2>
+            <button>View</button>
+        </div>
+        <div class="loan-type" onclick="showDetails('extension-loan')">
+            <h2>House Extension Loan</h2>
+            <button>View</button>
+        </div>
+        <div class="loan-type" onclick="showDetails('plot-loan')">
+            <h2>Plot Loan</h2>
+            <button>View</button>
+        </div>
+    </div>
+    <div class="loan-details" id="home-loan">
+        <h2>Home Loan Details</h2>
+        <p>Information about Home Loan...</p>
+    </div>
+    <div class="loan-details" id="renovation-loan">
+        <h2>House Renovation Loan Details</h2>
+        <p>Information about House Renovation Loan...</p>
+    </div>
+    <div class="loan-details" id="extension-loan">
+        <h2>House Extension Loan Details</h2>
+        <p>Information about House Extension Loan...</p>
+    </div>
+    <div class="loan-details" id="plot-loan">
+        <h2>Plot Loan Details</h2>
+        <p>Information about Plot Loan...</p>
+    </div>
+    <script>
+        let currentDetails = null;
+
+        function showDetails(loanType) {
+            if (currentDetails) {
+                currentDetails.style.display = "none";
+            }
+            currentDetails = document.getElementById(loanType);
+            currentDetails.style.display = "block";
+        }
+    </script>
+</body>
+</html>
