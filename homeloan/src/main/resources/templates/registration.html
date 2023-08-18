@@ -117,6 +117,9 @@
                     <input type="checkbox" id="admin" name="admin"/>
                 </div>
                 <button class="signup-button" type="submit">Sign Up</button>
+                <div th:if="${successMessage}" class="success">
+    				<p th:text="${successMessage}"></p>
+				</div>      
             </form>
         </div>
     </div>

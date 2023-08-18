@@ -15,13 +15,19 @@
             align-items: center;
         }
 
-        .banner {
+		.banner {
+			justify-content: space-between;
             background-color: #26A696;
             color: white;
             text-align: center;
             padding: 1rem;
             width: 100%;
         }
+
+		.logout-link {
+    		color: #fff;
+    		text-decoration: none;
+		}
 
         .container {
             text-align: center;
@@ -65,8 +71,10 @@
 </head>
 <body>
     <div class="banner">
-        <h1>Admin Dashboard</h1>
-    </div>
+    	<h1>Admin Dashboard</h1>
+    	<a class="logout-link" href="/login">Logout</a>
+	</div>
+    
     <div class="container">
         <table>
             <tr>
