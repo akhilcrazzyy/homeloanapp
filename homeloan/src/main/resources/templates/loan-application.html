@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner {
+            background-color: #228B22; /* Forest green color for the banner */
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #228B22; 
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1E8C21; 
+        }
+
+        .alert {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>Loan Application Form</h1>
+        <a class="logout-link" href="/login">Logout</a>
+    </div>
+    <form action="/submit-application" method="POST">
+        <label for="loan-type">Loan Type:</label>
+        <select name="loan-type" id="loan-type">
+            <option value="home-loan">Home Loan</option>
+            <option value="renovation-loan">House Renovation Loan</option>
+            <option value="extension-loan">House Extension Loan</option>
+            <option value="plot-loan">Plot Loan</option>
+        </select><br><br>
+
+        <label for="loan-amount">Loan Amount (INR):</label>
+        <input type="number" name="loan-amount" id="loan-amount" required><br><br>
+
+        <label for="loan-tenure">Loan Tenure (months):</label>
+        <input type="number" name="loan-tenure" id="loan-tenure" required><br><br>
+
+        <label for="interest-rate">Rate of Interest (%):</label>
+        <input type="number" name="interest-rate" id="interest-rate" required><br><br>
+
+        <label for="nominee">Nominee:</label>
+        <input type="text" name="nominee" id="nominee" required><br><br>
+
+        <button type="submit">Submit Application</button>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+    </form>
+</body>
+</html>

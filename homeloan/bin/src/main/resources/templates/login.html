@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Home Loan Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .login-container {
+            display: flex;
+            width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-section {
+            width: 60%;
+            background-color: #f0faff;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: 40px;
+        }
+
+        .right-section {
+            width: 40%;
+            padding: 40px;
+            text-align: center;
+            background-color: forestgreen;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: white;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .signin-button {
+            background-color: forestgreen;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .signup-link {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="left-section">
+            <h1>Login to Your Account</h1>
+            <form th:action="@{/login}" method="post">
+                <label for="email">Email:</label>
+                <input type="email" name="email" required/><br/>
+                <label for="password">Password:</label>
+                <input type="password" name="password" required/><br/>
+                <button class="signin-button" type="submit">Sign In</button>
+                <div th:if="${errorMessage}" class="error">
+        			<p th:text="${errorMessage}"></p>
+    			</div>
+            </form>
+        </div>
+        <div class="right-section">
+            <h1>New Here?</h1>
+            <p>Join us and experience the best home loan services.</p>
+            <a class="signup-link" href="/registration">Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>

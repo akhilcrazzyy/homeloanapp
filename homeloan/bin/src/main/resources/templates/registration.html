@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Home Loan Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .registration-container {
+            display: flex;
+            width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-section {
+            width: 60%;
+            background-color: forestgreen;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            padding: 40px;
+            color: white;
+        }
+
+        .right-section {
+            width: 40%;
+            padding: 40px;
+            text-align: center;
+            background-color: #fff;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .signup-button {
+            background-color: forestgreen;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .login-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .existing-account {
+            color: forestgreen;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="left-section">
+            <h1>Welcome to Home Loan Portal</h1>
+            <p>Get started with us today and avail the best home loan offerings.</p>
+            <a class="login-link" href="/login">Already have an account? Login</a>
+        </div>
+        <div class="right-section">
+            <h1>Create an Account</h1>
+            <form th:action="@{/registration}" method="post">
+                <div class="input-container">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" name="firstName" required/>
+                </div>
+                <div class="input-container">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" name="lastName" required/>
+                </div>
+                <div class="input-container">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" required/>
+                </div>
+                <div class="input-container">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" required/>
+                </div>
+                <div class="input-container checkbox-container">
+                    <label for="admin">Do you need Admin Access?</label>
+                    <input type="checkbox" id="admin" name="admin"/>
+                </div>
+                <button class="signup-button" type="submit">Sign Up</button>
+                <div th:if="${successMessage}" class="success">
+    				<p th:text="${successMessage}"></p>
+				</div>      
+            </form>
+        </div>
+    </div>
+</body>
+</html>
