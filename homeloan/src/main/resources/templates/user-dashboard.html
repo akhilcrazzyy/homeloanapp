@@ -1,99 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    .banner {
-        background-color: #00ACC1;
-        color: white;
-        text-align: center;
-        padding: 1rem;
-    }
-    .loan-types {
-        display: flex;
-        justify-content: center;
-        margin: 2rem;
-    }
-    .loan-type {
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 1rem;
-        margin: 0.5rem;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-    }
-    .loan-type:hover {
-        background-color: #E0E0E0;
-        color: #333;
-    }
-    .loan-details {
-        display: none;
-        padding: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-top: 1rem;
-        background-color: #f0f0f0;
-        color: #333;
-    }
-</style>
-<title>Home Loans</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Loans</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner {
+            background-color: #228B22; /* Forest green color for the banner */
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .left {
+            flex: 70%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .dropdown button {
+            background-color: #228B22; /* Forest green color for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown button:hover {
+            background-color: #1E8C21; /* Darker shade on hover */
+        }
+
+        .emi-calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 30%; /* Adjust the width to your preference */
+        }
+
+        .emi-calculator h2 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 60%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="button"] {
+            background-color: #228B22; /* Forest green color for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button[type="button"]:hover {
+            background-color: #1E8C21; /* Darker shade on hover */
+        }
+
+        #emi-result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .apply-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .apply-button button {
+            background-color: #228B22; /* Forest green color for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .apply-button button:hover {
+            background-color: #1E8C21; /* Darker shade on hover */
+        }
+    </style>
 </head>
 <body>
     <div class="banner">
         <h1>Home Loans</h1>
         <a class="logout-link" href="/login">Logout</a>
     </div>
-    <div class="loan-types">
-        <div class="loan-type" onclick="showDetails('home-loan')">
-            <h2>Home Loan</h2>
-            <button>View</button>
+    <div class="container">
+        <div class="left">
+            <div class="card">
+                <h2>Home Loan</h2>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown(this)">Loan Details</button>
+                    <div class="dropdown-content">
+                        <p>At Our Bank, we understand that a home is not just a place to stay. It is much more than that. It is a warm little corner of the world that is yours, tailored to your tastes and needs. It is the place where you celebrate the joys, deal with the sorrows and enjoy the journey called life. There is no place like home and with Our Home Loans you can gather hopes, achieve your dreams and create memories in your own space.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>House Renovation Loan</h2>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown(this)">Loan Details</button>
+                    <div class="dropdown-content">
+                        <p>A home is usually said to be a reflection of its owner. You can now spruce up your home and make renovation a milestone as memorable and enjoyable as home buying. With Our Bank's House Renovation Loans you can upgrade your existing home to a contemporary design and a more comfortable living space.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>House Extension Loan</h2>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown(this)">Loan Details</button>
+                    <div class="dropdown-content">
+                        <p>Over the years as you create your own space in life, your family and its needs also grow. A growing family requires an extended house to comfortably accommodate all its requirements. With Our Bank’s Home Extension Loans you can now add more space to your home ensuring that all your family needs have an extra room for expression.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>Plot Loan</h2>
+                <div class="dropdown">
+                    <button onclick="toggleDropdown(this)">Loan Details</button>
+                    <div class="dropdown-content">
+                        <p>When you own a plot of land, you can build a space that is uniquely yours. Our Bank's Plot Loans help you acquire the land for your home so that you can start turning your dream home into reality.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="loan-type" onclick="showDetails('renovation-loan')">
-            <h2>House Renovation Loan</h2>
-            <button>View</button>
-        </div>
-        <div class="loan-type" onclick="showDetails('extension-loan')">
-            <h2>House Extension Loan</h2>
-            <button>View</button>
-        </div>
-        <div class="loan-type" onclick="showDetails('plot-loan')">
-            <h2>Plot Loan</h2>
-            <button>View</button>
+        <div class="emi-calculator">
+            <h2>EMI Calculator</h2>
+            <form id="emi-form">
+                <label for="loan-amount">Loan Amount (₹):</label>
+                <input type="number" id="loan-amount" required><br><br>
+
+                <label for="interest-rate">Annual Interest Rate (%):</label>
+                <input type="number" id="interest-rate" required><br><br>
+
+                <label for="loan-tenure">Loan Tenure (months):</label>
+                <input type="number" id="loan-tenure" required><br><br>
+
+                <button type="button" onclick="calculateEMI()">Calculate EMI</button><br><br>
+
+                <div id="emi-result">
+                    <p>EMI: ₹<span id="emi-amount">0.00</span></p>
+                    <p>Total Amount: ₹<span id="total-amount">0.00</span></p>
+                    <p>Total Interest: ₹<span id="total-interest">0.00</span></p>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="loan-details" id="home-loan">
-        <h2>Home Loan Details</h2>
-        <p>Information about Home Loan...</p>
-    </div>
-    <div class="loan-details" id="renovation-loan">
-        <h2>House Renovation Loan Details</h2>
-        <p>Information about House Renovation Loan...</p>
-    </div>
-    <div class="loan-details" id="extension-loan">
-        <h2>House Extension Loan Details</h2>
-        <p>Information about House Extension Loan...</p>
-    </div>
-    <div class="loan-details" id="plot-loan">
-        <h2>Plot Loan Details</h2>
-        <p>Information about Plot Loan...</p>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="loan-application"><button type="button">Apply for Loan</button></a>
     </div>
     <script>
-        let currentDetails = null;
+        // Function to toggle the dropdown
+        function toggleDropdown(button) {
+            var dropdown = button.nextElementSibling;
+            var allDropdowns = document.querySelectorAll('.dropdown-content');
+            
+            // Close all other dropdowns
+            allDropdowns.forEach(function (content) {
+                if (content !== dropdown) {
+                    content.style.display = 'none';
+                }
+            });
 
-        function showDetails(loanType) {
-            if (currentDetails) {
-                currentDetails.style.display = "none";
-            }
-            currentDetails = document.getElementById(loanType);
-            currentDetails.style.display = "block";
+            // Toggle the selected dropdown
+            dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Function to calculate EMI
+        function calculateEMI() {
+            var loanAmount = parseFloat(document.getElementById('loan-amount').value);
+            var annualInterestRate = parseFloat(document.getElementById('interest-rate').value);
+            var loanTenureMonths = parseFloat(document.getElementById('loan-tenure').value);
+
+            var monthlyInterestRate = (annualInterestRate / 12) / 100;
+            var emi = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -loanTenureMonths));
+            var totalAmount = emi * loanTenureMonths;
+            var totalInterest = totalAmount - loanAmount;
+
+            // Display results in rupees
+            document.getElementById('emi-amount').textContent = emi.toFixed(2);
+            document.getElementById('total-amount').textContent = totalAmount.toFixed(2);
+            document.getElementById('total-interest').textContent = totalInterest.toFixed(2);
         }
     </script>
 </body>

@@ -1,117 +1,129 @@
 package com.demo.homeloan;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-import com.demo.homeloan.controller.UserController;
-import com.demo.homeloan.entity.User;
-import com.demo.homeloan.repo.UserRepository;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
+import com.demo.homeloan.controller.UserController;
+import com.demo.homeloan.entity.User;
+import com.demo.homeloan.service.UserService;
+
+@ExtendWith(MockitoExtension.class)
 class UserControllerTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Mock
     private Model model;
 
-    @InjectMocks
     private UserController userController;
 
-    @BeforeEach
+    @SuppressWarnings("deprecation")
+	@BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-    
-    @Test
-    void testShowLandingPage() {
-        String result = userController.redirectToLogin();
-        assertEquals("redirect:/login", result);
-    }
-    
-    @Test
-    void testShowLoginForm() {
-        String result = userController.showLoginForm();
-        assertEquals("login", result);
+        MockitoAnnotations.initMocks(this);
+        userController = new UserController(userService);
     }
 
     @Test
-    void testLogin_ValidCredentials_Admin() {
+    void redirectToLogin_ReturnsRedirectToLogin() {
+        String viewName = userController.redirectToLogin();
+        assertEquals("redirect:/login", viewName);
+    }
+
+    @Test
+    void showLoginForm_ReturnsLoginView() {
+        String viewName = userController.showLoginForm();
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void showRegistrationForm_ReturnsRegistrationViewWithUserAttribute() {
+        String viewName = userController.showRegistrationForm(model);
+        assertEquals("registration", viewName);
+
+        verify(model).addAttribute(eq("user"), any(User.class));
+    }
+
+    @Test
+    void register_WithValidUser_ReturnsRegistrationViewWithSuccessMessage() {
+        User user = new User();
+        user.setEmail("newuser@example.com");
+        user.setPassword("newpassword");
+
+        doNothing().when(userService).registerUser(user);
+
+        String viewName = userController.register(user, model);
+
+        assertEquals("registration", viewName);
+        verify(model).addAttribute("successMessage", "Registration Successful");
+        verify(userService).registerUser(user);
+    }
+
+
+    @Test
+    void login_WithValidCredentialsAndUserIsAdmin_ReturnsAdminDashboardView() {
         String email = "admin@example.com";
-        String password = "adminPassword";
+        String password = "adminpassword";
         User adminUser = new User();
         adminUser.setEmail(email);
         adminUser.setPassword(password);
         adminUser.setAdmin(true);
 
-        when(userRepository.findByEmail(email)).thenReturn(adminUser);
+        when(userService.authenticateUser(email, password)).thenReturn(true);
+        when(userService.findByEmail(email)).thenReturn(adminUser);
 
-        String result = userController.login(email, password, model);
-        assertEquals("admin-dashboard", result);
-        verify(model).addAttribute("users", userRepository.findAll());
+        String viewName = userController.login(email, password, model);
+
+        assertEquals("admin-dashboard", viewName);
+        verify(userService).authenticateUser(email, password);
+        verify(userService).findByEmail(email);
     }
 
     @Test
-    void testLogin_ValidCredentials_User() {
+    void login_WithValidCredentialsAndUserIsNotAdmin_ReturnsUserDashboardView() {
         String email = "user@example.com";
-        String password = "userPassword";
+        String password = "userpassword";
         User regularUser = new User();
         regularUser.setEmail(email);
         regularUser.setPassword(password);
         regularUser.setAdmin(false);
 
-        when(userRepository.findByEmail(email)).thenReturn(regularUser);
+        when(userService.authenticateUser(email, password)).thenReturn(true);
+        when(userService.findByEmail(email)).thenReturn(regularUser);
 
-        String result = userController.login(email, password, model);
-        assertEquals("user-dashboard", result);
-        verify(model).addAttribute("user", regularUser);
-    }
-    
-    @Test
-    void testLogin_InvalidPass_User() {
-        String email = "john@example.com";
-        String password = "userPassword";
-        String wrongpassword = "wrongPassword";
-        User regularUser = new User();
-        regularUser.setEmail(email);
-        regularUser.setPassword(password);
-        regularUser.setAdmin(false);
+        String viewName = userController.login(email, password, model);
 
-        when(userRepository.findByEmail(email)).thenReturn(regularUser);
-
-        String result = userController.login(email, wrongpassword, model);
-        assertEquals("login", result);
-        verify(model).addAttribute("errorMessage", "Invalid email or password");
+        assertEquals("user-dashboard", viewName);
+        verify(userService).authenticateUser(email, password);
+        verify(userService).findByEmail(email);
     }
 
     @Test
-    void testLogin_InvalidCredentials() {
+    void login_WithInvalidCredentials_ReturnsLoginViewWithError() {
         String email = "invalid@example.com";
-        String password = "invalidPassword";
+        String password = "invalidpassword";
 
-        when(userRepository.findByEmail(email)).thenReturn(null);
+        when(userService.authenticateUser(email, password)).thenReturn(false);
 
-        String result = userController.login(email, password, model);
-        assertEquals("login", result);
+        String viewName = userController.login(email, password, model);
+
+        assertEquals("login", viewName);
         verify(model).addAttribute("errorMessage", "Invalid email or password");
-    }
-
-    @Test
-    void testShowRegistrationForm() {
-        String result = userController.showRegistrationForm(model);
-        assertEquals("registration", result);
-    }
-
-    @Test
-    void testRegister() {
-        User user = new User();
-        String result = userController.register(user, model);
-        assertEquals("registration", result);
-        verify(userRepository).save(user);
-        verify(model).addAttribute("successMessage", "Registration Successful");
+        verify(userService).authenticateUser(email, password);
+        verifyNoMoreInteractions(userService);
     }
 }
