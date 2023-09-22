@@ -6,89 +6,98 @@
     <title>Admin Dashboard</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', sans-serif;
-            background-color: #f7f9fc;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-		.banner {
-			justify-content: space-between;
-            background-color: #26A696;
+        .banner {
+            background-color: #228B22; /* Forest green color for the banner */
             color: white;
             text-align: center;
-            padding: 1rem;
-            width: 100%;
+            padding: 20px;
         }
 
-		.logout-link {
-    		color: #fff;
-    		text-decoration: none;
-		}
-
-        .container {
+        h1 {
             text-align: center;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            width: 80%;
-            margin-top: 2rem;
-        }
-
-        h2 {
             color: #333;
-            margin-bottom: 1rem;
         }
 
         table {
-            width: 100%;
+            width: 100%; /* Stretch the table across the screen */
+            margin-top: 20px;
             border-collapse: collapse;
-            margin-top: 1rem;
+            background-color: #fff;
         }
 
         th, td {
-            padding: 0.8rem 1rem;
+            padding: 10px;
             text-align: left;
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc; /* Vertical line dividing columns */
         }
 
         th {
-            background-color: #00ACC1;
+            background-color: #228B22; /* Forest green color for table header */
             color: white;
+            border-right: 1px solid #fff; /* Vertical line for the last column in the header */
+            text-align: center; /* Center-align the header text */
         }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
+        
+        .logout-link {
+            text-decoration: underline;
+            color: #fff;
+            font-weight: bold;
+            margin-right: 20px;
         }
     </style>
 </head>
 <body>
     <div class="banner">
-    	<h1>Admin Dashboard</h1>
-    	<a class="logout-link" href="/login">Logout</a>
-	</div>
+        <h1>Admin Dashboard</h1>
+        <a class="logout-link" href="/login">Logout</a>
+    </div>
     
     <div class="container">
+        <h2 style="text-align: center;">Loan Details of All Users</h2> <!-- Center-align the heading -->
         <table>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Is Admin</th>
-            </tr>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.firstName}"></td>
-                <td th:text="${user.lastName}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.admin}"></td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Loan ID</th>
+                    <th>Loan Type</th>
+                    <th>Loan Amount (INR)</th>
+                    <th>Loan Tenure (months)</th>
+                    <th>Interest Rate (%)</th>
+                    <th>Nominee</th>
+                    <th>Loan Creation Date</th>
+                   <!-- <th>Outstanding Principal</th>
+                    <th>Outstanding EMI Count</th> -->
+                    <th>Loan Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Use Thymeleaf to loop through and display loan details for each user -->
+                <tr th:each="loan : ${userLoans}">
+                    <td th:text="${loan.user.id}"></td>
+                    <td th:text="${loan.user.firstName}"></td>
+                    <td th:text="${loan.user.email}"></td>
+                    <td th:text="${loan.id}"></td>
+                    <td th:text="${loan.loanType}"></td>
+                    <td th:text="${loan.loanAmount}"></td>
+                    <td th:text="${loan.loanTenure}"></td>
+                    <td th:text="${loan.interestRate}"></td>
+                    <td th:text="${loan.nominee}"></td>
+                    <td th:text="${#dates.format(loan.loanCreationDate, 'dd-MM-yyyy')}"></td>
+                  <!--  <td th:text="${loan.outstandingPrincipal}"></td>
+                    <td th:text="${loan.remainingEMI}"></td> -->
+                    <td th:text="${loan.loanStatus}"></td>
+                    
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>

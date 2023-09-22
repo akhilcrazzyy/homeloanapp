@@ -105,7 +105,7 @@
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             cursor: pointer;
             transition: background-color 0.2s;
         }
@@ -119,23 +119,12 @@
             font-weight: bold;
         }
 
-        .apply-button {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .apply-button button {
-            background-color: #228B22; /* Forest green color for buttons */
+        .loans-link,
+        .logout-link {
             color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .apply-button button:hover {
-            background-color: #1E8C21; /* Darker shade on hover */
+            text-decoration: underline; /* Add underline */
+            font-weight: bold; /* Make the text bold */
+            margin-right: 20px; /* Add some margin between the links */
         }
     </style>
 </head>
@@ -143,6 +132,7 @@
     <div class="banner">
         <h1>Home Loans</h1>
         <a class="logout-link" href="/login">Logout</a>
+        <a class="loans-link" href="/view-loans">View My Loans</a>
     </div>
     <div class="container">
         <div class="left">
@@ -206,7 +196,7 @@
         </div>
     </div>
     <div style="text-align: center; margin-top: 20px;">
-        <a href="loan-application"><button type="button">Apply for Loan</button></a>
+        <a href="loan-application"><button type="button" style="padding: 15px 100px; font-size: 20px;">Apply for Loan</button></a>
     </div>
     <script>
         // Function to toggle the dropdown

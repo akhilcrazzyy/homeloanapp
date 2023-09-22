@@ -37,7 +37,7 @@
             font-weight: bold;
         }
 
-        select, input[type="number"], input[type="text"] {
+        select, input[type="number"], input[type="text"], input[type="email"] {
             width: 90%;
             padding: 10px;
             margin-bottom: 10px;
@@ -67,38 +67,53 @@
             border-radius: 5px;
             text-align: center;
         }
+        .back-link,
+        .logout-link {
+            color: white;
+            text-decoration: underline; /* Add underline */
+            font-weight: bold; /* Make the text bold */
+            margin-right: 20px; /* Add some margin between the links */
+        }
+
     </style>
 </head>
 <body>
     <div class="banner">
         <h1>Loan Application Form</h1>
+        <a class="back-link" href="/user-dashboard">Back</a>
         <a class="logout-link" href="/login">Logout</a>
-    </div>
-    <form action="/submit-application" method="POST">
+    </div><br><br>
+    <form th:action="@{/loan-application}" method="post">
         <label for="loan-type">Loan Type:</label>
-        <select name="loan-type" id="loan-type">
-            <option value="home-loan">Home Loan</option>
-            <option value="renovation-loan">House Renovation Loan</option>
-            <option value="extension-loan">House Extension Loan</option>
-            <option value="plot-loan">Plot Loan</option>
+        <select name="loanType" id="loan-type">
+            <option value="Home Loan">Home Loan</option>
+            <option value="Renovation Loan">House Renovation Loan</option>
+            <option value="Extension Loan">House Extension Loan</option>
+            <option value="Plot Loan">Plot Loan</option>
         </select><br><br>
 
         <label for="loan-amount">Loan Amount (INR):</label>
-        <input type="number" name="loan-amount" id="loan-amount" required><br><br>
+        <input type="number" name="loanAmount" id="loan-amount" required><br><br>
 
         <label for="loan-tenure">Loan Tenure (months):</label>
-        <input type="number" name="loan-tenure" id="loan-tenure" required><br><br>
+        <input type="number" name="loanTenure" id="loan-tenure" required><br><br>
 
         <label for="interest-rate">Rate of Interest (%):</label>
-        <input type="number" name="interest-rate" id="interest-rate" required><br><br>
+        <input type="number" name="interestRate" id="interest-rate" required><br><br>
 
         <label for="nominee">Nominee:</label>
         <input type="text" name="nominee" id="nominee" required><br><br>
 
-        <button type="submit">Submit Application</button>
+        <label for="registered-email">Registered Email:</label>
+        <input type="email" name="registeredEmail" id="registered-email" required><br><br>
+
+        <button class="submit-button" type="submit">Submit Application</button>
         <div th:if="${successMessage}" class="alert alert-success">
             <p th:text="${successMessage}"></p>
         </div>
+        <div th:if="${errorMessage}" class="error">
+  			<p th:text="${errorMessage}"></p>
+    	</div>
     </form>
 </body>
 </html>
